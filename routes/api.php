@@ -12,7 +12,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('index',[DashboardController::class,'index']);
     Route::get('view/{id}',[DashboardController::class,'view']);
     Route::put('edit/{id}',[DashboardController::class,'edit']);
+    Route::get('product/{id}',[DashboardController::class,'getProduct']);
     Route::delete('sales-invoice/{id}',[DashboardController::class,'deleteInvoice']);
 });
 
-Route::post('login',[LoginController::class,'login']);
+Route::post('/',[LoginController::class,'login']);

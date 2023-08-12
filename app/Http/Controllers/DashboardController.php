@@ -44,11 +44,12 @@ class DashboardController extends Controller
     public function addInvoice(Request $request)
     {
         $user = SalesInvoice::create([
-            'customer_name' => $request->name,
-            'address' => $request->address,
+            'customer_name' => $request->input("customer")['customer_name'],
+            'address' => $request->input("customer")['address'],
         ]);
 
-        foreach ($request->input('data') as $data) {
+
+        foreach ($request->input('inputList') as $data) {
 
             $productPrice = Product::where('id', $data['product_id'])->value('price');
 
@@ -65,6 +66,24 @@ class DashboardController extends Controller
             'status' => 200,
             'message' => 'Invoice added successfully.'
         ]);
+    }
+
+    public function getProduct($id){
+
+        $product = Product::find($id);
+
+        if ($product) {
+            return response()->json([
+                'status' => 200,
+                'products' => $product
+            ]);
+        } else {
+            return response()->json([
+                'status' => 204,
+                'message' => 'Invalid product id',
+            ]);
+        }
+
     }
 
     public function deleteInvoice($id)
